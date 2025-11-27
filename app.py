@@ -13,23 +13,17 @@ def home():
 
 @app.route('/predict', methods=['POST'])
 def predict():
-    # Get form data
-    preg = int(request.form['preg'])
-    plas = int(request.form['plas'])
-    pres = int(request.form['pres'])
-    skin = int(request.form['skin'])
-    test = int(request.form['test'])
-    mass = float(request.form['mass'])
-    pedi = float(request.form['pedi'])
-    age = int(request.form['age'])
-    
-    # Prepare input
-    features = np.array([[preg, plas, pres, skin, test, mass, pedi, age]])
-    
-    # Predict
+    # Get AQI form data
+    pm25 = float(request.form['PM2.5'])
+    pm10 = float(request.form['PM10'])
+    no2 = float(request.form['NO2'])
+    so2 = float(request.form['SO2'])
+    co = float(request.form['CO'])
+    o3 = float(request.form['O3'])
+
+    features = np.array([[pm25, pm10, no2, so2, co, o3]])
     prediction = model.predict(features)[0]
-    result = 'Diabetic' if prediction == 1 else 'Not Diabetic'
-    
+    result = f"Predicted AQI: {prediction:.2f}"
     return render_template('index.html', prediction=result)
 
 if __name__ == '__main__':

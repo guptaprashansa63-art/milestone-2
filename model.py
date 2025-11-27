@@ -1,26 +1,26 @@
+
+
+
 import pandas as pd
-from sklearn.model_selection import train_test_split
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.metrics import accuracy_score
+from sklearn.ensemble import RandomForestRegressor
+from sklearn.datasets import make_regression
 import joblib
 
-# Load data
-url = "https://raw.githubusercontent.com/jbrownlee/Datasets/master/pima-indians-diabetes.data.csv"
-names = ['preg', 'plas', 'pres', 'skin', 'test', 'mass', 'pedi', 'age', 'class']
-data = pd.read_csv(url, names=names)
-X = data.drop('class', axis=1)
-y = data['class']
+# Generate synthetic AQI dataset using sklearn
+X, y = make_regression(n_samples=1000, n_features=6, noise=0.1, random_state=42)
 
-# Split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+# Create DataFrame with AQI feature names
+features = ['PM2.5', 'PM10', 'NO2', 'SO2', 'CO', 'O3']
+df = pd.DataFrame(X, columns=features)
+df['AQI'] = y
 
-# Train
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+# Select features and target
+X = df[features]
+y = df['AQI']
 
-# Save
+# Train AQI regression model
+model = RandomForestRegressor(random_state=42)
+model.fit(X, y)
+
+# Save model
 joblib.dump(model, 'model.pkl')
-
-# Test
-predictions = model.predict(X_test)
-print(f'Accuracy: {accuracy_score(y_test, predictions)}')

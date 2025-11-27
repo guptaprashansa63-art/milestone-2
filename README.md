@@ -1,11 +1,11 @@
-# Diabetes Prediction Web App
+# AQI Prediction Web App
 
-This is a web application that predicts diabetes risk based on health metrics using a machine learning model.
+This is a web application that predicts Air Quality Index (AQI) based on air pollution sensor data using a machine learning model.
 
 ## Features
 
-- Input health metrics (pregnancies, glucose, etc.)
-- Predict diabetes status using a trained Random Forest model
+- Input air quality metrics (PM2.5, PM10, NO2, SO2, CO, O3)
+- Predict AQI using a trained Random Forest regression model
 - Clean and responsive web interface
 
 ## Installation
@@ -15,7 +15,7 @@ This is a web application that predicts diabetes risk based on health metrics us
    pip install -r requirements.txt
    ```
 
-2. Train the model (requires internet for data download):
+2. Train the model:
    ```
    python model.py
    ```
